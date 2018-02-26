@@ -84,7 +84,7 @@ Das zu implementierende Verfahren wird in GPS-Empfängern zur Erfassung verfügb
 
 Das eingehende Signal liegt als Vektor komplexer Werte vor. Im ersten Schritt wird eine e-Funktion verwendet, um daraus eine Menge von Vektoren für jeden Frequenzwert zu bilden. Deren diskrete Fourier-Transformationen (DFT) werden im zweiten Schritt jeweils mit der DFT der Satellitencodes multipliziert und schließlich deren jeweilige inverse DFT gebildet.\\
 
-In der daraus resultierenden Ergebnismatrix wird im letzten Schritt der normalisierte Maximalwert ermittelt. Überschreitet dieser Wert einen bestimmten Grenzwert, kann das empfangene Eingangssignal als authentisches Satellitensignal bestätigt werden.
+In der daraus resultierenden Ergebnismatrix wird im letzten Schritt der normalisierte Maximalwert ermittelt. Überschreitet dieser einen bestimmten Grenzwert, kann das empfangene Eingangssignal als authentisches Satellitensignal bestätigt werden.
 
 \section{Coarse Grained Reconfigurable Array (CGRA)}
 Bei einem CGRA handelt es sich um eine Menge vernetzter Verarbeitungseinheiten, auch Processing Elements (PE) genannt. Die Konfiguration aller PEs als auch deren Verbindungen untereinander lassen sich mit nur wenigen Bit als sogenannte Kontexte speichern. Dadurch ist es möglich den Kontext während der Laufzeit mehrfach zu ändern und so eine Vielzahl unterschiedlicher Funktionen abzubilden. Da ein entsprechendes CGRA sehr viel Rechenleistung bereitstellen kann, werden darauf üblicherweise kontrollarme aber rechenintensive Teile von Anwendungen als sogenannte Kernels ausgeführt.  
@@ -165,7 +165,7 @@ Eine Verkleinerung der PE-Anzahl resultierte in unseren Versuchen immer in einem
 \chapter{Zusammenfassung}
 Erfreulicherweise brachten alle Optimierungen an unserer Implementierung des Akquisitions-Algorithmus hinsichtlich Performanz auch eine Reduktion der benötigten Energieeinheiten mit sich. Die dieser Ausarbeitung beigefügten Abgaben enthalten dementsprechend den gleichen Quelltext („\emph{Acquisition.java}“) sowohl in der leistungsstarken als auch der energiesparenden Variante.
 
-Die insgesamt niedrigste Anzahl benötigter Zeiteinheiten erreichten wir in unseren Versuchen unter Verwendung des mitgelieferten CGRAs mit 16 PEs und einem Unroll-Faktor von 16. Die PEs waren hierbei mit ihren unmittelbaren Nachbarn verbunden (PE0 mit PE1 und PE4, PE1 mit PE0, PE2 und PE5, usw.). Bei 111.911.879 benötigten Zeiteinheiten belief sich der Energieverbrauch dieser Konfiguration auf 886.024.210,065 Einheiten.
+Die insgesamt niedrigste Anzahl benötigter Zeiteinheiten erreichten wir in unseren Versuchen unter Verwendung des mitgelieferten CGRAs mit 16 PEs und einem Unroll-Faktor von 16. Die PEs waren hierbei mit ihren unmittelbaren Nachbarn verbunden (PE0 mit PE1 und PE4, PE1 mit PE0, PE2 und PE5, usw.). Bei 111.792.571 benötigten Zeiteinheiten belief sich der Energieverbrauch dieser Konfiguration auf 885.881.785,323  Einheiten.
 
 Den niedrigsten Energieverbrauch erreichten wir dagegen unter Verwendung einer eigenen CGRA-Konfiguration. Mit lediglich 3 vollvermaschten PEs und einem Unroll-Faktor von 8 erreichten wir in unseren Versuchen ein Minimum von 390.292.076,185 Energieeinheiten und verbesserten uns damit um fast 56\% gegenüber der leistungsstarken Variante. Die Anzahl benötigter Zeiteinheiten stieg dabei jedoch um fast 53\% auf 171.152.320.
 
