@@ -96,7 +96,7 @@ Im Rahmen dieses Praktikums wird ein Simulator eines auf dem AMIDAR-Modell basie
 
 \chapter{Durchführung}
 \section{Einarbeitung und erste Implementierung}
-Vor der eigentlichen Umsetzung des Akquisitions-Algorithmus galt es zunächst den zur Verfügung gestellten AMIDAR-Simulaor auf den von uns verwendeten Entwicklungssystemen zu installieren und sich in dessen Verwendung einzuarbeiten. An dieser Stelle sei zu erwähnen, dass sich der Simulator zum Zeitpunkt dieses Praktikums noch in der Entwicklung befand und dessen Verwendung kaum dokumentiert wurde. Erste Implementierungsarbeiten wurden dadurch bis in die zweite Praktikumswoche verzögert, als schließlich eine Anleitung der durchzuführenden Schritte bereitgestellt und einige Anpassungen am Simulator durchgeführt wurden.
+Vor der eigentlichen Umsetzung des Akquisitions-Algorithmus galt es zunächst den zur Verfügung gestellten AMIDAR-Simulator auf den von uns verwendeten Entwicklungssystemen zu installieren und sich in dessen Verwendung einzuarbeiten. An dieser Stelle sei zu erwähnen, dass sich der Simulator zum Zeitpunkt dieses Praktikums noch in der Entwicklung befand und dessen Verwendung kaum dokumentiert wurde. Erste Implementierungsarbeiten wurden dadurch bis in die zweite Praktikumswoche verzögert, als schließlich eine Anleitung der durchzuführenden Schritte bereitgestellt und einige Anpassungen am Simulator durchgeführt wurden.
 
 Der darauffolgende Schritt bestand aus dem Verständnis des Algorithmus und dessen Zerlegung in implementierbare Teilschritte. Den Grundprinzipien objektorientierter Programmierung folgend, suchten wir zunächst nach hilfreichen Bausteinen verwendbarer Java-Bibliotheken und bildeten einige Klassen, beispielsweise zur Repräsentation und Verarbeitung komplexer Zahlen.
 Das Priorisieren einer korrekten Verarbeitung der Eingabedaten und des Abgleichs der Ausgabedaten mit den Sollwerten führte zunächst zu einer sehr schlechten Synthetisierbarkeit unserer Umsetzung.
@@ -104,18 +104,18 @@ Das Priorisieren einer korrekten Verarbeitung der Eingabedaten und des Abgleichs
 \section{Verbesserung der Synthetisierbarkeit}
 Die Akquisition von GPS-Signalen umfasst die Verarbeitung großer Datensätze in Schleifen. Die Auslagerung solcher rechenintensiven Programmteile auf CGRAs kann zur Reduktion der zur Ausführung benötigten Zeit- und Energie beitragen. Unser nächster Schritt bestand dementsprechend aus der Restrukturierung unseres Programmcodes mit dem Ziel, eine möglichst hohe Synthetisierbarkeit zu erreichen. 
 
-Aus der zweiten Kick-off-Veranstaltung des Praktikums wurde bekannt, dass die Erstellung neuer Objekte und Arrays nicht synthetisierbar sei. Aus einem Gespräch mit den Betreuern des Praktikums ging weiterhin hervor, dass die Verwendung primitiver Datenstrukturen gegenüber eigener Klassen effizienter sei. 
+Aus der zweiten Kick-off-Veranstaltung des Praktikums wurde bekannt, dass die Erstellung neuer Objekte und Arrays nicht synthetisierbar sei. Aus einem Gespräch mit den Betreuern des Praktikums ging weiterhin hervor, dass die Verwendung primitiver Datenstrukturen gegenüber eigener Klassen effizienter ist. 
 
 In ersten Optimierungen entfernten wir dementsprechend unsere eigenen Klassen wieder und beschränkten uns auf die Nutzung mehrdimensionaler Float-Arrays zur Darstellung komplexer Zahlen. Weiterhin bündelten wir die Erstellung aller notwendigen Datenstrukturen in einer anfänglichen Initialisierungsphase. Durch diese Anpassungen ließ sich nun bereits ein Großteil unserer Implementierung synthetisieren. 
 
-Bei der Ausführung mit entsprechenden Parametern protokolliert der AMIDAR-Simulator ebenfalls die Synthetisierbarkeit des ausgeführten Programms. Besagtes Protokoll bezieht sich jedoch nicht auf den entwickelten high-level Code sondern den daraus generierten Java-Bytecode. Aufgrund fehlender Dokumentation und mangelnder Erfahrung im Umgang mit Bytecode scheiterten wir leider an der ausführlichen Interpretation der gelieferten Protokolle. Die Simulation mit 01\_inputcodes.dat als Eingabewert resultierte zu diesem Zeitpunkt in ca. 280 Millionen benötigten Zeitschritten und einem Verbrauch von 1,7 Milliarden Energieeinheiten.
+Bei der Ausführung mit entsprechenden Parametern protokolliert der AMIDAR-Simulator ebenfalls die Synthetisierbarkeit des ausgeführten Programms. Besagtes Protokoll bezieht sich jedoch nicht auf den entwickelten high-level Code sondern den daraus generierten Java-Bytecode. Aufgrund fehlender Dokumentation und mangelnder Erfahrung im Umgang mit Bytecode scheiterten wir leider an der ausführlichen Interpretation der gelieferten Protokolle. Die Simulation mit \emph{01\_inputcodes.dat} als Eingabewert resultierte zu diesem Zeitpunkt in ca. 280 Millionen benötigten Zeitschritten und einem Verbrauch von 1,7 Milliarden Energieeinheiten.
 
 \section{Verbesserung der Performanz}
 Nachdem nun ein Großteil unserer Implementierung synthetisierbar war, konzentrierten wir uns in den nächsten Schritten auf die Reduktion der notwendigen Zeiteinheiten. 
 
 In den Konfigurationsdateien des AMIDAR-Simulators finden sich unter anderem auch Informationen über die benötigten Ressourcen einzelner Operationen. Unser erster Ansatz bestand dementsprechend im Identifizieren und Reduzieren teurer und/oder unnötiger Berechnungen und Speicherzugriffe.
 
-Durch geschicktes Umformen, Zusammenführen oder auch Aufbrechen von Berechnungen auf ineinander verschachtelte Schleifen war es beispielsweise möglich teure Divisionen durch günstigere Multiplikationen zu ersetzen oder Vielzahl von Operationen gänzlich einzusparen.
+Durch geschicktes Umformen, Zusammenführen oder auch Aufbrechen von Berechnungen auf ineinander verschachtelte Schleifen war es beispielsweise möglich, teure Divisionen durch günstigere Multiplikationen zu ersetzen oder Vielzahl von Operationen gänzlich einzusparen.
 
 
 \noindent
@@ -142,7 +142,7 @@ for (int k = 0; k < nSamp; k++) {
 \end{minipage}
 
 
-Auf Kosten der Lesbarkeit, Nachvollziehbarkeit und entgegen dem sonst in der Programmierung dogmatisch praktizierten DRY-Prinzip („Don‘t repeat yourself“) favorisierten wir zudem die Verwendung statischer Zahlenwerte gegenüber Variablen, verzichteten auf wiederverwendbare Methoden und duplizierten Codefragmente. Das ermöglichte es auf globalen Datenstrukturen arbeiten zu arbeiten und so die Anzahl notwendiger Speicherzugriffe weiter zu reduzieren.
+Auf Kosten der Lesbarkeit, Nachvollziehbarkeit und entgegen dem sonst in der Programmierung dogmatisch praktizierten DRY-Prinzip („\emph{Don‘t repeat  yourself}“) favorisierten wir zudem die Verwendung statischer Zahlenwerte gegenüber Variablen, verzichteten auf wiederverwendbare Methoden und duplizierten Codefragmente. Das ermöglichte es auf globalen Datenstrukturen zu arbeiten und so die Anzahl notwendiger Speicherzugriffe weiter zu reduzieren.
 
 Die genannten Maßnahmen in Kombination mit einem auf 16 erhöhten Unroll-Faktor verringerten dabei die notwendigen Zeiteinheiten um fast 27\% auf ca. 205 Millionen bei einer Reduktion des Energieverbrauchs um 23\% auf ca. 1,3 Milliarden Einheiten. 
 
@@ -152,19 +152,18 @@ Durch die genannten Optimierungen konnte die Anzahl der benötigten Zeiteinheite
 
 Der AMIDAR-Simulator liefert weiterhin ein integriertes Debugging-Tool. Während des Synthesevorgangs werden von diesem automatisch Log-Dateien generiert, aus denen schließlich mit Hilfe eines mitgelieferten Skripts PDF-Dateien erstellt werden können. Diese liefern eine taktgenaue Übersicht über die Verwendung einzelner PEs, wodurch auch das Erkennen von Abhängigkeiten in der Ausführung des synthetisierten Bytecodes ermöglicht wird.
 
-In der Praxis kam es bei der Verwendung des mitgelieferten Skripts meistens zu Fehlern („dimension too large“). Dadurch konnten wir leider nur wenige Teile unserer Implementierung analysieren. Auch das Erkennen von Abhängigkeiten in der Ausführung des synthetisierten Bytecodes gestaltete sich aufgrund der hohen Komplexität als nur wenig effizient.
+In der Praxis kam es bei der Verwendung des mitgelieferten Skripts meistens zu Fehlern („\emph{dimension too large}“). Dadurch konnten wir leider nur wenige Teile unserer Implementierung analysieren. Auch das Erkennen von Abhängigkeiten in der Ausführung des synthetisierten Bytecodes gestaltete sich aufgrund der hohen Komplexität als nur wenig effizient.
 
 \section{Verbesserung des Energievebrauchs}
-Erfreulicherweise brachten alle bisherigen Optimierungen hinsichtlich Performanz auch eine Reduktion der benötigten Energieeinheiten mit sich. Der simulierte Energieverbrauch des Java-Prozessors wird weiterhin maßgeblich durch die Größe und Struktur des verwendeten CGRAs beeinflusst.
 
-Der simulierte Energieverbrauch des Java-Prozessors wird maßgeblich durch die Größe und Struktur des verwendeten CGRAs beeinflusst. Unser nächster Ansatz konzentrierte sich dementsprechend auf das Experimentieren mit unterschiedlichen CGRA-Konfigurationen. Bisher hatten wir ausschließlich den mitgelieferten CGRA mit 16 PEs („CGRA\_16.json“) in Verwendung. In der Analyse der vom Debugging-Tool erstellten Dokumente war dabei ersichtlich, dass nicht alle 16 PEs voll ausgelastet wurden.
+Der simulierte Energieverbrauch des Java-Prozessors wird maßgeblich durch die Größe und Struktur des verwendeten CGRAs beeinflusst. Unser nächster Ansatz konzentrierte sich dementsprechend auf das Experimentieren mit unterschiedlichen CGRA-Konfigurationen. Bisher hatten wir ausschließlich den mitgelieferten CGRA mit 16 PEs („\emph{CGRA\_16.json}“) in Verwendung. In der Analyse der vom Debugging-Tool erstellten Dokumente war dabei ersichtlich, dass nicht alle 16 PEs voll ausgelastet wurden.
 
 Zunächst entfernten wir daher sukzessive PEs und erreichten damit bereits einen reduzierten Energieverbrauch von bis zu 60\% auf 390 Millionen Einheiten. In vielen Fällen traten jedoch auch Fehler bei der Synthese auf, die nur teilweise durch Anpassungen an der PE-Vernetzung gelöst werden konnten. Da uns nur wenige Informationen über das Design von CGRA-Konfigurationen vorlag, konnten wir über den Sinn und die Fehlerträchtigkeit verschiedener Änderungen leider in den meisten Fällen nur spekulieren.
 
-Eine Verkleinerung der PE-Anzahl resultierte in unseren Versuchen immer in einem stark reduzierten Energieverbrauch gegenüber einem mäßigen Anstieg der benötigten Zeitschritte. Eine mächtigere Vernetzung der verwendeten PEs erhöhte den Energieverbrauch entgegen unserer Erwartungen in nicht nennenswertem Maße, reduzierte allerdings die Anzahl der benötigten Zeitschritte und das generelle das Auftreten von Fehlern bei der Synthese.
+Eine Verkleinerung der PE-Anzahl resultierte in unseren Versuchen immer in einem stark reduzierten Energieverbrauch gegenüber einem mäßigen Anstieg der benötigten Zeitschritte. Eine mächtigere Vernetzung der verwendeten PEs erhöhte den Energieverbrauch entgegen unserer Erwartungen in nicht nennenswertem Maße, reduzierte allerdings die Anzahl der benötigten Zeitschritte und das generelle Auftreten von Fehlern bei der Synthese.
 
 \chapter{Zusammenfassung}
-Erfreulicherweise brachten alle Optimierungen an unserer Implementierung des Akquisitions-Algorithmus hinsichtlich Performanz auch eine Reduktion der benötigten Energieeinheiten mit sich. Die dieser Ausarbeitung beigefügten Abgaben enthalten dementsprechend den gleichen Quelltext („Akquisition.java“) sowohl in der leistungsstarken als auch der energiesparenden Variante.
+Erfreulicherweise brachten alle Optimierungen an unserer Implementierung des Akquisitions-Algorithmus hinsichtlich Performanz auch eine Reduktion der benötigten Energieeinheiten mit sich. Die dieser Ausarbeitung beigefügten Abgaben enthalten dementsprechend den gleichen Quelltext („\emph{Acquisition.java}“) sowohl in der leistungsstarken als auch der energiesparenden Variante.
 
 Die insgesamt niedrigste Anzahl benötigter Zeiteinheiten erreichten wir in unseren Versuchen unter Verwendung des mitgelieferten CGRAs mit 16 PEs und einem Unroll-Faktor von 16. Die PEs waren hierbei mit ihren unmittelbaren Nachbarn verbunden (PE0 mit PE1 und PE4, PE1 mit PE0, PE2 und PE5, usw.). Bei 111.911.879 benötigten Zeiteinheiten belief sich der Energieverbrauch dieser Konfiguration auf 886.024.210,065 Einheiten.
 
