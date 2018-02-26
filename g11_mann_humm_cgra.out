@@ -1,0 +1,10 @@
+\BOOKMARK [0][-]{chapter.1}{Aufgabenstellung}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Grundlagen}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Akquisitions-Algorithmus}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Coarse Grained Reconfigurable Array \(CGRA\)}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Adaptive Micro-Instruction Driven Architecture \(AMIDAR\)}{chapter.2}% 5
+\BOOKMARK [0][-]{chapter.3}{Durchf\374hrung}{}% 6
+\BOOKMARK [1][-]{section.3.1}{Einarbeitung und erste Implementierung}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.2}{Verbesserung der Synthetisierbarkeit}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.3}{Verbesserung der Performanz}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.4}{Verbesserung des Energievebrauchs}{chapter.3}% 10
