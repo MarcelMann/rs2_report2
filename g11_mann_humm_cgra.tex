@@ -146,8 +146,6 @@ Auf Kosten der Lesbarkeit, Nachvollziehbarkeit und entgegen dem sonst in der Pro
 
 Die genannten Maßnahmen in Kombination mit einem auf 16 erhöhten Unroll-Faktor verringerten dabei die notwendigen Zeiteinheiten um fast 27\% auf ca. 205 Millionen bei einer Reduktion des Energieverbrauchs um 23\% auf ca. 1,3 Milliarden Einheiten. 
 
-Warum kein höherer Unroll-Faktor?
-
 Unser nächstes Ziel war eine Verbesserung der Nebenläufigkeit durch das Vermeiden von Abhängigkeiten im Datenfluss. Die bisher mehrdimensionalen Arrays zur Speicherung komplexer Vektoren und Matrizen wurden dafür zunächst auf mehrere, jeweils eindimensionale Arrays aufgeteilt. Um eine effizientere Speicherauslastung anzuregen, haben wir weiterhin Größe und Anzahl der verwendeten Datenstrukturen reduziert und diese mehrfach verwendet, sofern aktuell gespeicherte Werte nicht mehr benötigt wurden.
  
 Durch die genannten Optimierungen konnte die Anzahl der benötigten Zeiteinheiten erneut um 41\% auf 119 Millionen und der Energieverbrauch um fast 20\% auf ca. 1 Milliarde Einheiten reduziert werden.
@@ -159,11 +157,24 @@ In der Praxis kam es bei der Verwendung des mitgelieferten Skripts meistens zu F
 \section{Verbesserung des Energievebrauchs}
 Erfreulicherweise brachten alle bisherigen Optimierungen hinsichtlich Performanz auch eine Reduktion der benötigten Energieeinheiten mit sich. Der simulierte Energieverbrauch des Java-Prozessors wird weiterhin maßgeblich durch die Größe und Struktur des verwendeten CGRAs beeinflusst.
 
-Unser nächster Ansatz konzentrierte sich dementsprechend auf das Experimentieren mit unterschiedlichen CGRA-Konfigurationen. Bisher hatten wir ausschließlich den mitgelieferten CGRA mit 16 PEs („CGRA\_16.json“) in Verwendung. In der Analyse der vom Debugging-Tool erstellten Dokumente war ersichtlich, dass nicht alle 16 PEs voll ausgelastet wurden. 
+Der simulierte Energieverbrauch des Java-Prozessors wird maßgeblich durch die Größe und Struktur des verwendeten CGRAs beeinflusst. Unser nächster Ansatz konzentrierte sich dementsprechend auf das Experimentieren mit unterschiedlichen CGRA-Konfigurationen. Bisher hatten wir ausschließlich den mitgelieferten CGRA mit 16 PEs („CGRA\_16.json“) in Verwendung. In der Analyse der vom Debugging-Tool erstellten Dokumente war dabei ersichtlich, dass nicht alle 16 PEs voll ausgelastet wurden.
 
-Zunächst entfernten wir sukzessive PEs und erreichten damit bereits einen reduzierten Energieverbrauch. In vielen Fällen traten jedoch auch Fehler bei der Synthese auf, die nur teilweise durch Anpassungen an der PE-Vernetzung gelöst werden konnten. Da uns nur wenige Informationen über das Design von CGRA-Konfigurationen vorlag, konnten wir über den Sinn und die Fehlerträchtigkeit verschiedener Änderungen leider in den meisten Fällen nur spekulieren.
+Zunächst entfernten wir daher sukzessive PEs und erreichten damit bereits einen reduzierten Energieverbrauch von bis zu 60\% auf 390 Millionen Einheiten. In vielen Fällen traten jedoch auch Fehler bei der Synthese auf, die nur teilweise durch Anpassungen an der PE-Vernetzung gelöst werden konnten. Da uns nur wenige Informationen über das Design von CGRA-Konfigurationen vorlag, konnten wir über den Sinn und die Fehlerträchtigkeit verschiedener Änderungen leider in den meisten Fällen nur spekulieren.
 
-Eine Verkleinerung der PE-Anzahl resultierte in unseren Versuchen immer in einem stark reduzierten Energieverbrauch gegenüber einem mäßigen Anstieg der benötigten Zeitschritte. Bei Konfigurationen von weniger als 5 PEs sorgte ein Unroll-Faktor größer als 8 für unverhältnismäßig lange Synthesezeiten. Eine mächtigere Vernetzung der verwendeten PEs erhöhte den Energieverbrauch entgegen unserer Erwartungen in nicht nennenswertem Maße, reduzierte allerdings die Anzahl der benötigten Zeitschritte und reduzierte generell das Auftreten von Fehlern bei der Synthese.
+Eine Verkleinerung der PE-Anzahl resultierte in unseren Versuchen immer in einem stark reduzierten Energieverbrauch gegenüber einem mäßigen Anstieg der benötigten Zeitschritte. Eine mächtigere Vernetzung der verwendeten PEs erhöhte den Energieverbrauch entgegen unserer Erwartungen in nicht nennenswertem Maße, reduzierte allerdings die Anzahl der benötigten Zeitschritte und das generelle das Auftreten von Fehlern bei der Synthese.
+
+\chapter{Zusammenfassung}
+Erfreulicherweise brachten alle Optimierungen an unserer Implementierung des Akquisitions-Algorithmus hinsichtlich Performanz auch eine Reduktion der benötigten Energieeinheiten mit sich. Die dieser Ausarbeitung beigefügten Abgaben enthalten dementsprechend den gleichen Quelltext („Akquisition.java“) sowohl in der leistungsstarken als auch der energiesparenden Variante.
+
+Die insgesamt niedrigste Anzahl benötigter Zeiteinheiten erreichten wir in unseren Versuchen unter Verwendung des mitgelieferten CGRAs mit 16 PEs und einem Unroll-Faktor von 16. Die PEs waren hierbei mit ihren unmittelbaren Nachbarn verbunden (PE0 mit PE1 und PE4, PE1 mit PE0, PE2 und PE5, usw.). Bei 111.911.879 benötigten Zeiteinheiten belief sich der Energieverbrauch dieser Konfiguration auf 886.024.210,065 Einheiten.
+
+Den niedrigsten Energieverbrauch erreichten wir dagegen unter Verwendung einer eigenen CGRA-Konfiguration. Mit lediglich 3 vollvermaschten PEs und einem Unroll-Faktor von 8 erreichten wir in unseren Versuchen ein Minimum von 390.292.076,185 Energieeinheiten und verbesserten uns damit um fast 56\% gegenüber der leistungsstarken Variante. Die Anzahl benötigter Zeiteinheiten stieg dabei jedoch um fast 53\% auf 171.152.320.
+
+Ein Unroll-Faktor von mehr als 16 führte in unseren Versuchen zu unverhältnismäßig langen Synthesezeiten und wurde daher nicht näher betrachtet. Die Vermutung liegt nahe, dass dieser Umstand mit dem verfügbaren Arbeitsspeicher der ausführenden Maschine zusammenhängt.
+
+Großes Verbesserungspotential sehen wir weiterhin in den verwendeten CGRA-Konfigurationen zu deren Design wir leider keine zufriedenstellende Literatur finden konnten.
+
+
 
 %% Anhang %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\appendix
