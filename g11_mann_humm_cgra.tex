@@ -121,7 +121,7 @@ Durch geschicktes Umformen, Zusammenführen oder auch Aufbrechen von Berechnunge
 \noindent
 \begin{minipage}[t]{.49\textwidth}
 \hspace*{0pt}
-\begin{lstlisting}[basicstyle=\small, caption = Naiver Ansatz]
+\begin{lstlisting}[basicstyle=\small, caption = Ohne Umformungen]
 for (int k = 0; k < nSamp; k++) { 
  for (int t = 0; t < nSamp; t++) 
   fac = -2 * t * k * PI;
@@ -131,7 +131,7 @@ for (int k = 0; k < nSamp; k++) {
 \hfill
 \begin{minipage}[t]{.49\textwidth}
 \hspace*{0pt}
-\begin{lstlisting}[basicstyle=\small, caption= Optimierter Ansatz]
+\begin{lstlisting}[basicstyle=\small, caption= Optimierte Berechnungen]
 fac1 = -6.2831855f / nSamp;
 for (int k = 0; k < nSamp; k++) { 
  fac2 = fac1 * k; 
